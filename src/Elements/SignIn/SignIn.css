@@ -1,0 +1,58 @@
+.basicForm{
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: top;
+    text-align: center;
+}
+
+.basicForm>span{
+    background-color: #023047;
+    border: 1px solid;
+    border-radius: 20px;
+    padding: 90px 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+.basicForm>span>input{
+    margin: 10px;
+    height: 50px;
+    width: 280px;
+    padding: 10px;
+    border-radius: 10px;
+}
+.basicForm>span>button{
+    font-size: 1.2rem;
+    padding: 0.7rem 1rem;
+    background-color:teal;
+    border: 0;
+    border-radius: 5px;
+    color: aliceblue;
+    margin: 25px;
+    width: 280px;
+    border-radius: 10px;
+}
+.basicForm>span>h1{
+   
+    font-family:Arial, Helvetica, sans-serif;
+    color: white;
+    
+}
+.footer{
+    font-size: 1.1rem;
+    background-color:teal;
+    color: aliceblue;
+    margin-left: 30px;
+    width: 280px;
+    border-radius: 10px;
+    height:50px;
+    display: flex;
+    justify-content: center;
+    padding-top: 10px;
+}
+
