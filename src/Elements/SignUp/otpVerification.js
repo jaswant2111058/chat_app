@@ -25,7 +25,7 @@ const OTP = ({email}) =>{
         .then((res)=>{
             alert(res.data.msg)
             if(res.data.msg==="otp verified")
-            navigate('/signIn')
+            navigate('/signin')
             else{
                 alert('something went wrong please try after some time')
             }

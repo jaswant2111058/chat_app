@@ -42,10 +42,10 @@ function App()
               <BrowserRouter>
               <Routes>
               <Route exact ="/signup" element={<SignUp setEmail={setEmail} user={user} />}/>
-              <Route exact path ="/" element={user?<Navigate to='/Test'/>:<SignIn />}/>
-              <Route path='/otpVerify' element={<OTP email={email}/>}/>
-              <Route path ='/signIn' element={<SignIn />}/>
-              <Route path ='/Test' element={<Test/>}/>
+              <Route exact path ="/" element={user?<Navigate to='/test'/>:<SignIn />}/>
+              <Route path='/otpverify' element={<OTP email={email}/>}/>
+              <Route path ='/signin' element={<SignIn />}/>
+              <Route path ='/test' element={<Test/>}/>
               </Routes>
               </BrowserRouter>
          

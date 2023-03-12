@@ -12,7 +12,7 @@ const Play = () => {
 
   if (!user) {
     console.log(user)
-    window.location.href = '/signIn'
+    window.location.href = '/signin'
   }
   const [chats, setChats] = useState([])
   let role = 'none'
@@ -225,7 +225,7 @@ const Play = () => {
 //  ---------  logout function -----------
   async function logout() {
     localStorage.removeItem('user')
-    navigate('/signIn')
+    navigate('/signin')
   }
 
 
