@@ -4,7 +4,7 @@ import {useNavigate, Link} from "react-router-dom"
 import './SignUp.css'
 
 const SignUp = ({setEmail}) => {
-    const baseURL = "https://chat-app-swl5.onrender.com";
+    const baseURL = "https://chat-app-pt84.onrender.com";
     const navigate = useNavigate()
     const [user,setUser] = useState({
         username:"",
