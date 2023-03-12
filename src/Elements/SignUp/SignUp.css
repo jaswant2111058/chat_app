@@ -27,16 +27,17 @@
 }
 .basicForm1>span>button{
     font-size: 1.2rem;
-    padding: 0.7rem 1rem;
+    padding: 0.7rem ;
     background-color: teal;
     border: 0;
-    border-radius: 20px;
+    border-radius: 15px;
     color: aliceblue;
-    margin: 8px 10px 10px 10px;
+    margin: 8px 10px 5px 10px;
     width: 280px;
 }
 
 .basicForm1>span>h1{
+    
     font-family:Arial, Helvetica, sans-serif;
     color: aliceblue;
 }

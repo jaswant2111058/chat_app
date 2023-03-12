@@ -1,66 +1,84 @@
 
 import axios from 'axios';
 import io from "socket.io-client";
-//import Cookies from 'universal-cookie';
 import { useState, useEffect, useMemo } from 'react';
 import { Await, useNavigate } from "react-router-dom";
 const Play = () => {
 
 
-
+  const navigate = useNavigate();
   const baseURL = `http://localhost:5000`
   const user = JSON.parse(localStorage.getItem('user'))
-  const navigate = useNavigate();
+
+  if (!user) {
+    console.log(user)
+    window.location.href = '/signIn'
+  }
   const [chats, setChats] = useState([])
+  let role = 'none'
+
+  if (user.type === true) {
+    role = 'block'
+  }
+
   
-  const[role,setRole] = useState('none')
-    if(user.type===true)
-    {
-      setRole('block')
-    }
   const socket = useMemo(() => (io.connect(`${baseURL}`)), []);
-  //  useEffect(()=> {
+
+
+  // ----------- refreshing chats function from data base---------//
+
   async function refresh() {
     await axios.post(`${baseURL}/posts/${user.token}`,
     )
       .then((res) => {
         (setChats(res.data))
-        //  console.log(res.data)
       })
   }
-  // },[])
-
   useEffect(() => { refresh() }, [])
+
+
+  //----------- receving new chat notifiaction---------//
   useMemo(() => {
     socket.on('msgRecived', async msg => {
       refresh()
     })
   }, [])
 
+//---------maping for rendering -----------//
+
   var chat =
     chats.map((data) => {
       if (data.tweetedBy.email === (user.email)) {
         return (
           <>
-            <li className="me">
+            <li className="me" >
               <div className="entete">
-                <h3>{data.time}</h3>
                 <h2>{data.tweetedBy.name}</h2>
+                <h3>{data.time}</h3>
+
                 <span className="status blue"></span>
               </div>
-              <div className="message" onClick={()=>reactOpt(data._id)}>
+              <div className="message" onDoubleClick={() => reactOpt(data._id)} onClick={() => showReaction(data._id)}>
                 {data.tweet}
-              </div>
-              <div className='reactBtn' id={`${data._id}`} style={{display:'none'}}>
-                <button onClick={()=>reaction(data._id+'input')}>React</button>
-                <button onClick={()=>Delete(data._id)}>Delete</button>
-                <div id={data._id+'input'}  style={{display:'none'}} >
-                  <input id={data._id+'inpt'} className='inpt'/><button onClick={()=>Delete(data._id)}>Post</button>
+                <div className='reaction' id={`${data._id + 'show'}`} style={{ display: 'none' }}>
+                  <div className='who'>
+                    {data.reactions[0].reactedBy.name} {data.reactions[0].time}
+                  </div>
+                  <div className='what'>
+                    {data.reactions[0].reaction}
+                  </div>
                 </div>
               </div>
-          </li>
-          </>
+              <div className='reactBtn' id={`${data._id}`} style={{ display: 'none' }}>
+                <button onClick={() => reaction(data._id + 'input')}>React</button>
+                <button onClick={() => Delete(data._id)}>Delete</button>
+                <div id={data._id + 'input'} style={{ display: 'none' }} >
+                  <input id={data._id + 'inpt'} className='inpt' /><button className='bnt' onClick={() => reactionPost(data._id)}>Post</button>
+                </div>
+              </div>
 
+            </li>
+          </>
         )
       }
       else {
@@ -72,13 +90,22 @@ const Play = () => {
                 <h2>{data.tweetedBy.name}</h2>
                 <h3>{data.time}</h3>
               </div>
-              <div className="message"  onClick={()=>reactOpt(data._id)}>
-                {data.tweet} </div>
-              <div className='reactBtn' id={`${data._id}`} style={{display:'none'}}>
-                <button onClick={()=>reaction(data._id+'input')}>React</button>
-                <button onClick={()=>Delete(data._id)} style={{display:'none'}} >Delete</button>
-                <div id={data._id+'input'}  style={{display:`${role}`}} >
-                  <input id={`${data._id+'inpt'}`} className='inpt'/><button onClick={()=>Delete(data._id)}>Post</button>
+              <div className="message" onDoubleClick={() => reactOpt(data._id)} onClick={() => showReaction(data._id)}>
+                {data.tweet}
+                <div className='reaction' id={`${data._id + 'show'}`} style={{ display: 'none' }} >
+                  <div className='who'>
+                    {data.reactions[0].reactedBy.name} {data.reactions[0].time}
+                  </div>
+                  <div className='what'>
+                    {data.reactions[0].reaction}
+                  </div>
+                </div>
+              </div>
+              <div className='reactBtn' id={`${data._id}`} style={{ display: 'none' }}>
+                <button onClick={() => reaction(data._id + 'input')}>React</button>
+                <button onClick={() => Delete(data._id)} style={{ display: `${role}` }} >Delete</button>
+                <div id={data._id + 'input'} style={{ display: `none` }}>
+                  <input id={`${data._id + 'inpt'}`} className='inpt' /><button className='bnt' onClick={() => reactionPost(data._id)}>Post</button>
                 </div>
               </div>
             </li>
@@ -87,76 +114,102 @@ const Play = () => {
       }
     })
 
-  function reactOpt(id) {
-   
-    var x = document.getElementById(`${id}`);
-    if (x.style.display === 'none') {
-      x.style.display = 'block';
-    } else {
-      x.style.display = 'none';
-    }
-     console.log(id)
-  }
 
-
- async function Delete(id,email){
-
-    if(role==='block'||email===user.email){
-  await axios.post(`${baseURL}/tweetDelete/${user.token}`, id)
-  .then((res) => {
-  })
-socket.emit('msgRecived', 'details')
-Await(refresh())
-    }
-    else{
-      alert('Not auth to delete the msg')
-    }
-  }
-
-         function reaction(id)
-       {
-
-    var x = document.getElementById(`${id}`);
-    if (x.style.display === 'none') {
-      x.style.display = 'block';
-    } else {
-      x.style.display = 'none';
-    }
-
-  }
-
-
-async function reactionPost(id)
-{
-const text = document.getElementById(`${id+'inpt'}`)
-    const detail = {
-      chatId:id,
-      reaction:text
-    }
-    await axios.post(`${baseURL}/tweetReaction/${user.token}`,detail)
-  .then((res) =>{
-  })
-socket.emit('msgRecived', 'details')
-Await(refresh())
-
-}
+    // ------------ showing reaction options ----------//
   
+  function reactOpt(id) {
+    var x = document.getElementById(`${id}`);
+    if (x.style.display === 'none') {
+      x.style.display = 'block';
+    } else {
+      x.style.display = 'none';
+    }
+    console.log(id)
+  }
+
+  // ---------- showing reactions on tweet function ---------
+
+  function showReaction(id) {
+    var x = document.getElementById(`${id + 'show'}`);
+    if (x.style.display === 'none') {
+      x.style.display = 'block';
+    } else {
+      x.style.display = 'none';
+    }
+    console.log(id)
+  }
+
+//  --------- deleting tweets function -------//
+
+  async function Delete(id) {
+
+    axios.post(`${baseURL}/tweetDelete/${user.token}`, { id: id })
+      .then((res) => {
+      })
+      socket.emit('msgRecived', 'details')
+    refresh()
+  }
+
+//--------showing reaction input box on tweets---------/
+
+  function reaction(id) {
+    var x = document.getElementById(`${id}`);
+    if (x.style.display === 'none') {
+      x.style.display = 'block';
+    } else {
+      x.style.display = 'none';
+    }
+
+  }
+
+  // sendinf new post reaction function-------//
+
+  async function reactionPost(id) {
+    const text = document.getElementById(`${id + 'inpt'}`).value
+    console.log(text)
+    if (text == null || text == '' || text == 'undefine') {
+      alert('enter some text')
+    }
+    else {
+      const detail = {
+        chatId: id,
+        reaction: {
+          reactedBy: {
+            name: user.name,
+            email: user.email
+          },
+          reaction: text
+        }
+      }
+      await axios.post(`${baseURL}/tweetReaction/${user.token}`, detail)
+        .then((res) => {
+        })
+      socket.emit('msgRecived', 'details')
+      Await(refresh())
+    }
+  }
 
 
-  // console.log(chats)
-  // console.log(chat)
 
+    // -------sending new post function---------//
   async function send() {
     const tweet = document.getElementById('text').value
     if (tweet !== '') {
       const details = {
         tweetedBy: {
           name: user.name,
-          user: user.user
+          email: user.email
         },
         tweet: tweet,
+        reactions: {
+          reactedBy: {
+            name: null,
+            email: null
+          },
+          time: null,
+          reaction: 'No Reactions'
+        }
       }
-      //  console.log(details)
       await axios.post(`${baseURL}/newPost/${user.token}`, details)
         .then((res) => {
         })
@@ -169,12 +222,21 @@ Await(refresh())
       alert('Enter Some text')
     }
   }
-  //  console.log(chat)
+//  ---------  logout function -----------
+  async function logout() {
+    localStorage.removeItem('user')
+    navigate('/signIn')
+  }
+
+
   return (
     <div id="container">
       <main>
         <header>
-
+          <h4>{user.name}</h4>
+          <button onClick={logout}>
+            LogOut
+          </button>
         </header>
         <ul id="chat">
           {chat}
@@ -182,7 +244,7 @@ Await(refresh())
         <div className="footers">
           <input
             id='text'
-            className="input"
+            className="inputs"
             placeholder="Type your massage"
             name="msg"
             type={"text"}

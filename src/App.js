@@ -5,7 +5,6 @@ import Test from "./Elements/Test/Test";
 import SignUp from "./Elements/SignUp/SignUp";
 import SignIn from "./Elements/SignIn/SignIn";
 import OTP from "./Elements/SignUp/otpVerification";
-import './Elements/Play/Play.css'
 import './Elements/Test/Test.css'
 import './Elements/SignUp/SignUp.css'
 
@@ -19,9 +18,15 @@ function App()
  const getUser= async()=>{
   try{
     const url ="http://localhost:5000/googlelogin"
+    const user = JSON.parse(localStorage.getItem('user'))
+        if(!user){
     const{data}= await axios.get(url,{withCredentials:true});
     setUser(data.user);
     localStorage.setItem('user',JSON.stringify(data.user))
+        }
+        else{
+          setUser(user)
+        }
   }
   catch(err)
   {
@@ -36,9 +41,10 @@ function App()
             return (
               <BrowserRouter>
               <Routes>
-              <Route exact path ="/" element={<SignUp setEmail={setEmail} user={user} />}/>
+              <Route exact ="/signup" element={<SignUp setEmail={setEmail} user={user} />}/>
+              <Route exact path ="/" element={user?<Navigate to='/Test'/>:<SignIn />}/>
               <Route path='/otpVerify' element={<OTP email={email}/>}/>
-              <Route path ='/signIn' element={user?<Navigate to='/Test'/>:<SignIn />}/>
+              <Route path ='/signIn' element={<SignIn />}/>
               <Route path ='/Test' element={<Test/>}/>
               </Routes>
               </BrowserRouter>

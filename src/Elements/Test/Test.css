@@ -56,7 +56,6 @@
   .green{
     background-color:#58b666;
   }
-
   .blue{
     background-color:aqua;
     margin-right:0;
@@ -65,40 +64,24 @@
   
   main header{
     height: 60px;
-    padding:3px 20px 30px 40px;
-    
+    padding:3px 20px 10px 40px;
+    display: flex;
   }
-  main header > *{
-    display:inline-block;
-    vertical-align:top;
-  }
-  main header img:first-child{
-    border-radius:50%;
-  }
-  main header img:last-child{
-    width:24px;
-    margin-top:8px;
-  }
-  main header div{
-    margin-left:10px;
-    margin-right:145px;
-  }
-  main header h2{
-    font-size:px;
-    margin-bottom:5px;
-  }
+ main header button{
+  margin: 15px 0px 0px 325px;
+  font-size: medium;
+  border-radius: 15px;
+  background-color:deepskyblue;
+  border: solid 1px;
+ }
   #chat{
     padding-left:0;
     margin:0;
     list-style-type:none;
     height:600px;
     background-color:#023047;
-
     overflow-y: auto;
     scroll-snap-type: y mandatory;
-
-
-
     scroll-behavior: smooth;
     -webkit-overflow-scrolling: touch;
   }
@@ -128,10 +111,10 @@
     margin-bottom:5px;
   }
   #chat .message{
-    padding:10px 15px 10px 20px;
+    padding:10px 10px 10px 10px;
     color:solid black;
     line-height:20px;
-    max-width:90%;
+    max-width:50%;
     display:inline-block;
     text-align:left;
     border-radius:10px;
@@ -141,17 +124,18 @@
   }
   #chat .you .message{
     background-color:#58b666;
+    text-align: center;
   }
   #chat .me .message{
     background-color:aqua;
-    
+    text-align: center;
   }
   
   .footer{
     
     margin-left: 0px;
   }
-  .input{
+  .inputs{
     border-radius: 8px;
     height: 40px;
     width: 350px;
@@ -163,11 +147,10 @@
     border-radius: 10px;
     height: 38px;
     width:60px ;
-    background-color:blue;
-    margin: 17px 0px 0px 400px;
+    background-color:deepskyblue;
+    margin-left: 30px;
     font-size: medium;
-    color: #fff;
-    border:none;
+    border: solid 1px;
    
 }
   h2{
@@ -177,7 +160,35 @@
   }
   .reactBtn>button
   {
+
    border-radius: 10px;
    background-color: darkcyan;
   
+  }
+  .bnt{
+    
+   border-radius: 10px;
+   background-color: darkcyan;
+  }
+  .inpt{
+    border-radius: 10px;
+  }
+  .reaction{
+    background-color:rgb(4, 160, 160); 
+    border-radius: 10px;
+    padding:7px;
+    
+  }
+  .who{
+    font-size: 11px;
+  }
+  .what{
+    display: flex;
+    justify-content: center;
+  }
+  .hvr {
+    display: none;
+  }   
+  .message:hover + .hvr {
+    display: block;
   }

@@ -26,10 +26,14 @@ const OTP = ({email}) =>{
             alert(res.data.msg)
             if(res.data.msg==="otp verified")
             navigate('/signIn')
+            else{
+                alert('something went wrong please try after some time')
+            }
         })
     }
     return<form className='basicForm2' style={{margin:"0px"}}>
             <span>
+                <h4>OTP has been send to {email.email}</h4>
             <input
                 placeholder="OTP"
                 name="otp"
@@ -40,7 +44,6 @@ const OTP = ({email}) =>{
                 onClick={handleClick}
             >Submit</button>
             </span> 
-            
          </form> 
    
 }
