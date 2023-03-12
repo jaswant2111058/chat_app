@@ -5,7 +5,7 @@ import { useNavigate, Link } from "react-router-dom";
 import "./SignIn.css";
 
 const SignIn = () => {
-  const baseURL = "http://localhost:5000";
+  const baseURL = "https://chat-app-swl5.onrender.com";
   const navigate = useNavigate()
   const [cookies, setCookie] = useCookies(['access_token'])
 

@@ -7,7 +7,7 @@ const Play = () => {
 
 
   const navigate = useNavigate();
-  const baseURL = `http://localhost:5000`
+  const baseURL = `https://chat-app-swl5.onrender.com`
   const user = JSON.parse(localStorage.getItem('user'))
 
   if (!user) {
