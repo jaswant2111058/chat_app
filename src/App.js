@@ -41,11 +41,11 @@ function App()
             return (
               <BrowserRouter>
               <Routes>
-              <Route exact ="/signup" element={<SignUp setEmail={setEmail} user={user} />}/>
+              <Route exact path ="/signup" element={<SignUp setEmail={setEmail} user={user} />}/>
               <Route exact path ="/" element={user?<Navigate to='/test'/>:<SignIn />}/>
-              <Route path='/otpverify' element={<OTP email={email}/>}/>
-              <Route path ='/signin' element={<SignIn />}/>
-              <Route path ='/test' element={<Test/>}/>
+              <Route exact path='/otpverify' element={<OTP email={email}/>}/>
+              <Route exact path ='/signin' element={<SignIn />}/>
+              <Route exact path ='/test' element={<Test/>}/>
               </Routes>
               </BrowserRouter>
          
