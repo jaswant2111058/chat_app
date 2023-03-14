@@ -21,7 +21,7 @@ function App()
    // const user = JSON.parse(localStorage.getItem('user'))
       //  if(!user){
        axios.defaults.withCredentials = true;
-    const{data}= await axios.get(url);
+    const{data}= await axios.post(url);
     setUser(data.user);
     localStorage.setItem('user',JSON.stringify(data.user))
      //   }
