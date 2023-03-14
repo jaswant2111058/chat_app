@@ -18,15 +18,15 @@ function App()
  const getUser= async()=>{
   try{
     const url ="https://chat-app-pt84.onrender.com/googlelogin"
-    const user = JSON.parse(localStorage.getItem('user'))
-        if(!user){
+   // const user = JSON.parse(localStorage.getItem('user'))
+      //  if(!user){
     const{data}= await axios.get(url,{withCredentials:true});
     setUser(data.user);
     localStorage.setItem('user',JSON.stringify(data.user))
-        }
-        else{
-          setUser(user)
-        }
+     //   }
+     //   else{
+     //     setUser(user)
+     //   }
   }
   catch(err)
   {
