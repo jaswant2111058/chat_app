@@ -20,7 +20,8 @@ function App()
     const url ="https://chat-app-pt84.onrender.com/googlelogin"
    // const user = JSON.parse(localStorage.getItem('user'))
       //  if(!user){
-    const{data}= await axios.get(url,{withCredentials:true});
+       axios.defaults.withCredentials = true;
+    const{data}= await axios.get(url);
     setUser(data.user);
     localStorage.setItem('user',JSON.stringify(data.user))
      //   }
